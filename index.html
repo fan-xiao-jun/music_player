@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>音乐播放器</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body>
+    <div class="box" id="box">
+        <div class="player" id="player">
+
+            <!-- 搜索区域 -->
+            <div class="search_bar">
+                <h2>音乐播放器</h2>
+                <input type="text" @keyup.enter="search" v-model="keywords">
+            </div>
+            <ul class="search_history">
+                <li>111</li>
+                <li>111</li>
+            </ul>
+
+
+
+            <!-- 主体 -->
+            <div class="main">
+                <div class="song_list">
+                    <ul>
+                        <li v-for="(item,index) in songList">
+                            <a href="javascript:;" @click="playSong(item.id)"></a>
+                            <b> {{item.name}} </b>
+                            <i v-if="item.mvid!=0" @click="playMV(item.mvid)"></i>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- :class="isPlaying?playing:''"" -->
+                <div class="middle" :class="{playing:isPlaying}">
+                    <img src="images/player_bar.png" class="play_bar" />
+                    <!-- 黑胶碟片 -->
+                    <img src="images/disc.png" class="disc autoRotate" />
+                    <img :src="songCover" class="songCover autoRotate" />
+                </div>
+                <div class="comment">
+                    <h5>热门留言</h5>
+                    <div class="comment_list">
+                        <dl v-for="item in comments">
+                            <dt><img v-bind:src="item.user.avatarUrl" alt=""></dt>
+                            <dd class="name"></dd>
+                            <dd class="detail">{{item.content}}</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 音乐 -->
+            <div class="audio_mod">
+                <audio ref='audio' controls autoplay loop class="myaudio" :src="songAddr" @play="play"
+                    @pause="pause"></audio>
+            </div>
+
+        </div>
+        <!-- MV -->
+        <div class="video_mod" v-show="isShow" style="display: none;">
+            <video ref='video' :src="mvAddr" controls="controls"></video>
+            <div class="mask" @click="hide"></div>
+        </div>
+
+    </div>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- 官网提供的 axios 在线地址 -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./js/music.js"></script>
+
+</body>
+
+</html>

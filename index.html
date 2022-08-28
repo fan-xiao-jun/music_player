@@ -7,6 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>音乐播放器</title>
     <link rel="stylesheet" href="css/index.css">
+    <style>
+        /* 防闪动 */
+        [v-cloak] {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -29,7 +35,7 @@
             <div class="main">
                 <div class="song_list">
                     <ul>
-                        <li v-for="(item,index) in songList">
+                        <li v-for="(item,index) in songList" v-cloak>
                             <a href="javascript:;" @click="playSong(item.id)"></a>
                             <b> {{item.name}} </b>
                             <i v-if="item.mvid!=0" @click="playMV(item.mvid)"></i>
@@ -47,7 +53,7 @@
                 <div class="comment">
                     <h5>热门留言</h5>
                     <div class="comment_list">
-                        <dl v-for="item in comments">
+                        <dl v-for="item in comments" v-cloak>
                             <dt><img v-bind:src="item.user.avatarUrl" alt=""></dt>
                             <dd class="name"></dd>
                             <dd class="detail">{{item.content}}</dd>
